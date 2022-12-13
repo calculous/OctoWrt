@@ -11,7 +11,7 @@ read -p "Press [ENTER] to continue...or [ctrl+c] to exit"
 
 format(){
 	while true; do
-	    read -p "This script will format your sdcard. Are you sure about this? [y/n]: " yn
+	    read -p "This script will format your usb flash drive. Are you sure about this? [y/n]: " yn
 	    case $yn in
 		[Yy]* ) break;;
 		[Nn]* ) exit;;
@@ -19,9 +19,10 @@ format(){
 	    esac
 	done
 	
-	umount /dev/mmcblk0p1;
+	umount /dev/
+	cblk0p1;
 
-	yes | mkfs.ext4 /dev/mmcblk0p1;
+	yes | mkfs.ext4 /dev/sda1;
 
 }
 
@@ -41,7 +42,7 @@ extroot(){
 	echo -ne 'Making extroot...     [===========>                      ](37%)\r'
 	uci commit fstab;
 	echo -ne 'Making extroot...     [=============>                    ](43%)\r'
-	DEVICE="/dev/mmcblk0p1";
+	DEVICE="/dev/sda1";
 	echo -ne 'Making extroot...     [===============>                  ](50%)\r'
 	eval $(block info "${DEVICE}" | grep -o -e "UUID=\S*");
 	echo -ne 'Making extroot...     [=================>                ](56%)\r'
@@ -55,7 +56,7 @@ extroot(){
 	echo -ne 'Making extroot...     [=========================>        ](81%)\r'
 	uci commit fstab;
 	echo -ne 'Making extroot...     [===========================>      ](87%)\r'
-	mount /dev/mmcblk0p1 /mnt;
+	mount /dev/sda1 /mnt;
 	echo -ne 'Making extroot...     [=============================>    ](93%)\r'
 	cp -f -a /overlay/. /mnt;
 	echo -ne 'Making extroot...     [===============================>  ](98%)\r'
