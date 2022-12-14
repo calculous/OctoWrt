@@ -19,8 +19,7 @@ format(){
 	    esac
 	done
 	
-	umount /dev/
-	cblk0p1;
+	umount /dev/sda1;
 
 	yes | mkfs.ext4 /dev/sda1;
 
